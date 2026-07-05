@@ -1,0 +1,3971 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BayarKita - Pembayaran Digital Mudah</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #0d9488;
+        --primary-dark: #0f766e;
+        --primary-light: #5eead4;
+        --secondary: #f59e0b;
+        --danger: #ef4444;
+        --success: #22c55e;
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8fafb;
+        --bg-tertiary: #e5e7eb;
+        --text-primary: #111827;
+        --text-secondary: #6b7280;
+        --text-muted: #9ca3af;
+        --border-color: #e2e5ea;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12);
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+        --radius-full: 9999px;
+        --transition-fast: 150ms ease;
+        --transition-normal: 250ms ease;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --font-sans:
+          "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        --font-mono: "JetBrains Mono", "Fira Code", monospace;
+      }
+      [data-theme="dark"] {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1a2332;
+        --bg-tertiary: #2d3a4d;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #5a6a80;
+        --border-color: #2d3a4d;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        font-family: var(--font-sans);
+        background: var(--bg-secondary);
+        background-image:
+          radial-gradient(
+            ellipse at 15% 10%,
+            rgba(13, 148, 136, 0.04) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            ellipse at 85% 80%,
+            rgba(245, 158, 11, 0.03) 0%,
+            transparent 50%
+          );
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+        transition:
+          background-color var(--transition-normal),
+          color var(--transition-normal);
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: var(--radius-full);
+      }
+      ::selection {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 700;
+        line-height: 1.25;
+        color: var(--text-primary);
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.6rem;
+      }
+      h3 {
+        font-size: 1.35rem;
+      }
+      h4 {
+        font-size: 1.15rem;
+      }
+      p {
+        color: var(--text-secondary);
+      }
+      a {
+        color: var(--primary);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+      }
+      a:hover {
+        color: var(--primary-dark);
+      }
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-4);
+      }
+      .section {
+        display: none;
+        padding: var(--space-8) 0;
+        min-height: calc(100vh - 70px);
+      }
+      .section.active {
+        display: block;
+        animation: fadeIn 0.35s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      .animate-spin {
+        animation: spin 1s linear infinite;
+      }
+      .card {
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+        transition:
+          transform var(--transition-fast),
+          box-shadow var(--transition-fast);
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .card-header {
+        margin-bottom: var(--space-4);
+        padding-bottom: var(--space-4);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .card-subtitle {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: var(--space-1);
+      }
+      .form-group {
+        margin-bottom: var(--space-4);
+      }
+      .form-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: var(--space-2);
+      }
+      .form-input,
+      .form-select {
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-size: 1rem;
+        font-family: inherit;
+        transition:
+          border-color var(--transition-fast),
+          box-shadow var(--transition-fast);
+      }
+      .form-input:focus,
+      .form-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+      }
+      .form-input::placeholder {
+        color: var(--text-muted);
+      }
+      .form-input.error {
+        border-color: var(--danger);
+      }
+      .form-input.error:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+      }
+      .error-message {
+        color: var(--danger);
+        font-size: 0.75rem;
+        margin-top: var(--space-1);
+        display: none;
+      }
+      .error-message.show {
+        display: block;
+      }
+      .grid {
+        display: grid;
+        gap: var(--space-4);
+      }
+      .grid-cols-1 {
+        grid-template-columns: 1fr;
+      }
+      .grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .grid-cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .flex {
+        display: flex;
+      }
+      .flex-col {
+        flex-direction: column;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .gap-2 {
+        gap: var(--space-2);
+      }
+      .gap-3 {
+        gap: var(--space-3);
+      }
+      .gap-4 {
+        gap: var(--space-4);
+      }
+      .gap-6 {
+        gap: var(--space-6);
+      }
+      .mt-2 {
+        margin-top: var(--space-2);
+      }
+      .mt-4 {
+        margin-top: var(--space-4);
+      }
+      .mt-6 {
+        margin-top: var(--space-6);
+      }
+      .mb-2 {
+        margin-bottom: var(--space-2);
+      }
+      .mb-4 {
+        margin-bottom: var(--space-4);
+      }
+      .mb-6 {
+        margin-bottom: var(--space-6);
+      }
+      .p-4 {
+        padding: var(--space-4);
+      }
+      .p-6 {
+        padding: var(--space-6);
+      }
+      .text-center {
+        text-align: center;
+      }
+      .text-right {
+        text-align: right;
+      }
+      .text-sm {
+        font-size: 0.85rem;
+      }
+      .text-lg {
+        font-size: 1.1rem;
+      }
+      .text-xl {
+        font-size: 1.25rem;
+      }
+      .text-2xl {
+        font-size: 1.5rem;
+      }
+      .font-bold {
+        font-weight: 700;
+      }
+      .font-semibold {
+        font-weight: 600;
+      }
+      .text-primary-c {
+        color: var(--primary);
+      }
+      .text-danger {
+        color: var(--danger);
+      }
+      .text-success {
+        color: var(--success);
+      }
+      .text-warning {
+        color: var(--warning);
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        font-size: 0.72rem;
+        font-weight: 600;
+      }
+      .badge-success {
+        background: rgba(34, 197, 94, 0.1);
+        color: var(--success);
+      }
+      .badge-danger {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+      }
+      .badge-warning {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+      }
+      .badge-info {
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--info);
+      }
+      .table-container {
+        overflow-x: auto;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-color);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-primary);
+      }
+      th,
+      td {
+        padding: var(--space-3) var(--space-4);
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+      th {
+        background: var(--bg-secondary);
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      tr:hover td {
+        background: var(--bg-secondary);
+      }
+      .empty-state {
+        text-align: center;
+        padding: var(--space-12) var(--space-6);
+      }
+      .empty-state-icon {
+        font-size: 3.5rem;
+        margin-bottom: var(--space-4);
+        opacity: 0.4;
+      }
+      .empty-state-title {
+        font-size: 1.15rem;
+        font-weight: 600;
+        margin-bottom: var(--space-2);
+      }
+      .empty-state-desc {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      :focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 2px;
+      }
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--primary);
+        color: white;
+        padding: var(--space-2) var(--space-4);
+        z-index: 200;
+        transition: top var(--transition-fast);
+      }
+      .skip-link:focus {
+        top: 0;
+      }
+
+      /* ===== COMPONENTS ===== */
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        transition: background-color var(--transition-normal);
+      }
+      .navbar::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--primary),
+          var(--secondary),
+          var(--primary-light)
+        );
+        opacity: 0.7;
+      }
+      .navbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 68px;
+        padding: 0 var(--space-4);
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--primary);
+        cursor: pointer;
+      }
+      .navbar-brand-icon {
+        width: 38px;
+        height: 38px;
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-light)
+        );
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.1rem;
+      }
+      /* PERBAIKAN: navbar-nav default flex untuk desktop, disembunyikan hanya di mobile */
+      .navbar-nav {
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+        list-style: none;
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-md);
+        color: var(--text-secondary);
+        font-weight: 500;
+        font-size: 0.82rem;
+        transition: all var(--transition-fast);
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-family: inherit;
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        background: rgba(13, 148, 136, 0.1);
+        color: var(--primary);
+      }
+      .nav-link i {
+        font-size: 1rem;
+      }
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.4rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        padding: var(--space-2);
+      }
+      .theme-toggle {
+        background: none;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-full);
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: all var(--transition-fast);
+        font-size: 1rem;
+      }
+      .theme-toggle:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .saldo-card {
+        background: linear-gradient(
+          135deg,
+          #0d9488 0%,
+          #065f46 50%,
+          #064e3b 100%
+        );
+        border-radius: var(--radius-xl);
+        padding: var(--space-8);
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+      .saldo-card::before {
+        content: "";
+        position: absolute;
+        top: -60%;
+        right: -15%;
+        width: 280px;
+        height: 280px;
+        background: rgba(255, 255, 255, 0.07);
+        border-radius: 50%;
+      }
+      .saldo-card::after {
+        content: "";
+        position: absolute;
+        bottom: -40%;
+        left: -10%;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 50%;
+      }
+      .saldo-label {
+        font-size: 0.85rem;
+        opacity: 0.85;
+        margin-bottom: var(--space-2);
+        position: relative;
+        z-index: 1;
+      }
+      .saldo-amount {
+        font-size: 2.25rem;
+        font-weight: 900;
+        margin-bottom: var(--space-4);
+        position: relative;
+        z-index: 1;
+        letter-spacing: -0.02em;
+      }
+      .saldo-actions {
+        display: flex;
+        gap: var(--space-3);
+        position: relative;
+        z-index: 1;
+      }
+      .saldo-btn {
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: white;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-md);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        font-family: inherit;
+      }
+      .saldo-btn:hover {
+        background: rgba(255, 255, 255, 0.28);
+      }
+
+      .quick-access-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: var(--space-4);
+        margin-top: var(--space-6);
+      }
+      .quick-access-item {
+        background: var(--bg-primary);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: var(--space-5) var(--space-3);
+        text-align: center;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        position: relative;
+        z-index: 1;
+      }
+      .quick-access-item:hover {
+        border-color: var(--primary);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+      }
+      .quick-access-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(13, 148, 136, 0.08);
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--space-3);
+        font-size: 1.35rem;
+        color: var(--primary);
+        transition: all var(--transition-fast);
+      }
+      .quick-access-item:hover .quick-access-icon {
+        background: rgba(13, 148, 136, 0.15);
+        transform: scale(1.08);
+      }
+      .quick-access-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .promo-banner {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        border-radius: var(--radius-xl);
+        padding: var(--space-6);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        margin-top: var(--space-6);
+      }
+      .promo-banner::before {
+        content: "";
+        position: absolute;
+        right: -30px;
+        top: -30px;
+        width: 160px;
+        height: 160px;
+        background: rgba(245, 158, 11, 0.15);
+        border-radius: 50%;
+      }
+      .promo-banner-content {
+        position: relative;
+        z-index: 1;
+      }
+      .promo-banner-tag {
+        display: inline-block;
+        background: var(--secondary);
+        color: white;
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        font-size: 0.72rem;
+        font-weight: 700;
+        margin-bottom: var(--space-3);
+      }
+      .promo-banner-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        margin-bottom: var(--space-2);
+      }
+      .promo-banner-desc {
+        opacity: 0.85;
+        margin-bottom: var(--space-4);
+        font-size: 0.9rem;
+      }
+      .promo-banner-btn {
+        background: white;
+        color: #1e293b;
+        border: none;
+        padding: var(--space-3) var(--space-6);
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform var(--transition-fast);
+        font-family: inherit;
+      }
+      .promo-banner-btn:hover {
+        transform: scale(1.05);
+      }
+
+      .bill-result {
+        background: var(--bg-primary);
+        border: 2px solid var(--primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        margin-top: var(--space-6);
+        animation: fadeIn 0.3s ease;
+      }
+      .bill-result-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-4);
+        padding-bottom: var(--space-4);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .bill-result-status {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+      .bill-result-status-icon {
+        width: 38px;
+        height: 38px;
+        background: rgba(34, 197, 94, 0.1);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--success);
+        font-size: 1.1rem;
+      }
+      .bill-result-detail {
+        display: grid;
+        gap: var(--space-3);
+      }
+      .bill-result-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bill-result-label {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+      .bill-result-value {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+      }
+      .bill-result-total {
+        margin-top: var(--space-4);
+        padding-top: var(--space-4);
+        border-top: 2px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bill-result-total-label {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .bill-result-total-value {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--primary);
+      }
+
+      .payment-methods {
+        display: grid;
+        gap: var(--space-3);
+        margin-top: var(--space-4);
+      }
+      .payment-method {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-4);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        background: var(--bg-primary);
+      }
+      .payment-method:hover {
+        border-color: var(--primary-light);
+      }
+      .payment-method.selected {
+        border-color: var(--primary);
+        background: rgba(13, 148, 136, 0.04);
+      }
+      .payment-method-radio {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all var(--transition-fast);
+      }
+      .payment-method.selected .payment-method-radio {
+        border-color: var(--primary);
+        background: var(--primary);
+      }
+      .payment-method-radio::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: white;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: transform var(--transition-fast);
+      }
+      .payment-method.selected .payment-method-radio::after {
+        transform: scale(1);
+      }
+      .payment-method-icon {
+        width: 44px;
+        height: 44px;
+        background: var(--bg-secondary);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+      }
+      .payment-method-info {
+        flex: 1;
+      }
+      .payment-method-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+      }
+      .payment-method-desc {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+      }
+
+      .provider-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: var(--space-3);
+      }
+      .provider-card {
+        background: var(--bg-primary);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: var(--space-4);
+        text-align: center;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+      }
+      .provider-card:hover,
+      .provider-card.selected {
+        border-color: var(--primary);
+        background: rgba(13, 148, 136, 0.04);
+      }
+      .provider-card-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--space-2);
+        font-size: 0.7rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -0.02em;
+      }
+      .provider-card-name {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .nominal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: var(--space-3);
+      }
+      .nominal-card {
+        background: var(--bg-primary);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        text-align: center;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+      }
+      .nominal-card:hover,
+      .nominal-card.selected {
+        border-color: var(--primary);
+        background: rgba(13, 148, 136, 0.04);
+      }
+      .nominal-card-amount {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .nominal-card-price {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: var(--space-1);
+      }
+
+      /* PERBAIKAN: SPP Table - pastikan semua elemen bisa diklik */
+      .spp-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .spp-table th,
+      .spp-table td {
+        padding: var(--space-3) var(--space-4);
+        border-bottom: 1px solid var(--border-color);
+      }
+      .spp-table th {
+        background: var(--bg-secondary);
+        font-weight: 600;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .spp-table tbody tr {
+        cursor: pointer;
+        transition: background var(--transition-fast);
+      }
+      .spp-table tbody tr:hover td {
+        background: var(--bg-secondary);
+      }
+      .spp-table tbody tr.selected td {
+        background: rgba(13, 148, 136, 0.06);
+      }
+      .spp-checkbox {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: var(--primary);
+        position: relative;
+        z-index: 2;
+      }
+      .spp-total-bar {
+        background: var(--bg-primary);
+        border: 2px solid var(--primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-4) var(--space-6);
+        margin-top: var(--space-4);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .spp-total-label {
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+      .spp-total-amount {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--primary);
+      }
+
+      .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-normal);
+      }
+      .loading-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .loading-content {
+        background: var(--bg-primary);
+        padding: var(--space-8) var(--space-10);
+        border-radius: var(--radius-xl);
+        text-align: center;
+        box-shadow: var(--shadow-xl);
+      }
+      .loading-spinner {
+        width: 44px;
+        height: 44px;
+        border: 4px solid var(--border-color);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto var(--space-4);
+      }
+      .loading-text {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .loading-subtext {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: var(--space-1);
+      }
+
+      .toast-container {
+        position: fixed;
+        top: 85px;
+        right: var(--space-4);
+        z-index: 1100;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+        max-width: 380px;
+        pointer-events: none;
+      }
+      .toast {
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-4) var(--space-5);
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        animation: slideIn 0.3s ease;
+        border-left: 4px solid;
+        pointer-events: auto;
+      }
+      .toast.success {
+        border-left-color: var(--success);
+      }
+      .toast.error {
+        border-left-color: var(--danger);
+      }
+      .toast.warning {
+        border-left-color: var(--warning);
+      }
+      .toast.info {
+        border-left-color: var(--info);
+      }
+      .toast-icon {
+        font-size: 1.15rem;
+        flex-shrink: 0;
+      }
+      .toast.success .toast-icon {
+        color: var(--success);
+      }
+      .toast.error .toast-icon {
+        color: var(--danger);
+      }
+      .toast.warning .toast-icon {
+        color: var(--warning);
+      }
+      .toast.info .toast-icon {
+        color: var(--info);
+      }
+      .toast-content {
+        flex: 1;
+      }
+      .toast-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.85rem;
+      }
+      .toast-message {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
+      .toast-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 1rem;
+        padding: var(--space-1);
+        transition: color var(--transition-fast);
+      }
+      .toast-close:hover {
+        color: var(--text-primary);
+      }
+
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all var(--transition-normal);
+        padding: var(--space-4);
+      }
+      .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .modal {
+        background: var(--bg-primary);
+        border-radius: var(--radius-xl);
+        max-width: 480px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        box-shadow: var(--shadow-xl);
+        transform: scale(0.95);
+        transition: transform var(--transition-normal);
+      }
+      .modal-overlay.active .modal {
+        transform: scale(1);
+      }
+      .modal-header {
+        padding: var(--space-5) var(--space-6);
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .modal-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+      }
+      .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.4rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: color var(--transition-fast);
+      }
+      .modal-close:hover {
+        color: var(--text-primary);
+      }
+      .modal-body {
+        padding: var(--space-6);
+      }
+      .modal-footer {
+        padding: var(--space-4) var(--space-6);
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--space-3);
+      }
+      .modal-receipt {
+        max-width: 380px;
+      }
+
+      .receipt {
+        background: white;
+        color: #1a1a1a;
+        padding: var(--space-6);
+        border-radius: var(--radius-lg);
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+      }
+      .receipt-header {
+        text-align: center;
+        border-bottom: 2px dashed #ccc;
+        padding-bottom: var(--space-4);
+        margin-bottom: var(--space-4);
+      }
+      .receipt-logo {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: var(--space-1);
+      }
+      .receipt-title {
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .receipt-id {
+        font-size: 0.7rem;
+        color: #666;
+        margin-top: var(--space-1);
+      }
+      .receipt-body {
+        display: grid;
+        gap: var(--space-2);
+      }
+      .receipt-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.82rem;
+      }
+      .receipt-row.label {
+        color: #666;
+      }
+      .receipt-row.total {
+        border-top: 2px dashed #ccc;
+        padding-top: var(--space-3);
+        margin-top: var(--space-2);
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .receipt-footer {
+        text-align: center;
+        margin-top: var(--space-5);
+        padding-top: var(--space-4);
+        border-top: 2px dashed #ccc;
+        font-size: 0.72rem;
+        color: #888;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-5);
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        border: none;
+        font-family: inherit;
+        white-space: nowrap;
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+      }
+      .btn-primary:hover:not(:disabled) {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+      .btn-secondary {
+        background: var(--bg-tertiary);
+        color: var(--text-primary);
+      }
+      .btn-secondary:hover:not(:disabled) {
+        background: var(--border-color);
+      }
+      .btn-danger {
+        background: var(--danger);
+        color: white;
+      }
+      .btn-danger:hover:not(:disabled) {
+        background: #dc2626;
+      }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--border-color);
+        color: var(--text-primary);
+      }
+      .btn-outline:hover:not(:disabled) {
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--text-secondary);
+      }
+      .btn-ghost:hover:not(:disabled) {
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+      }
+      .btn-lg {
+        padding: var(--space-4) var(--space-8);
+        font-size: 1rem;
+      }
+      .btn-sm {
+        padding: var(--space-2) var(--space-3);
+        font-size: 0.75rem;
+      }
+      .btn-block {
+        width: 100%;
+      }
+
+      .filter-bar {
+        display: flex;
+        gap: var(--space-2);
+        margin-bottom: var(--space-4);
+        flex-wrap: wrap;
+      }
+      .filter-btn {
+        padding: var(--space-2) var(--space-4);
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-full);
+        background: var(--bg-primary);
+        color: var(--text-secondary);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        font-family: inherit;
+      }
+      .filter-btn:hover,
+      .filter-btn.active {
+        border-color: var(--primary);
+        background: rgba(13, 148, 136, 0.08);
+        color: var(--primary);
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: var(--space-4);
+        margin-bottom: var(--space-6);
+      }
+      .stat-card {
+        background: var(--bg-primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-5);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+      }
+      .stat-card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        margin-bottom: var(--space-3);
+      }
+      .stat-card-icon.blue {
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--info);
+      }
+      .stat-card-icon.green {
+        background: rgba(34, 197, 94, 0.1);
+        color: var(--success);
+      }
+      .stat-card-icon.orange {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+      }
+      .stat-card-icon.red {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+      }
+      .stat-card-value {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+      .stat-card-label {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        margin-top: var(--space-1);
+      }
+
+      .progress-steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        margin-bottom: var(--space-6);
+        flex-wrap: wrap;
+      }
+      .progress-step {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+      .progress-step-circle {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        background: var(--bg-tertiary);
+        color: var(--text-muted);
+        transition: all var(--transition-fast);
+      }
+      .progress-step.active .progress-step-circle {
+        background: var(--primary);
+        color: white;
+      }
+      .progress-step.completed .progress-step-circle {
+        background: var(--success);
+        color: white;
+      }
+      .progress-step-line {
+        width: 32px;
+        height: 2px;
+        background: var(--bg-tertiary);
+        transition: background var(--transition-fast);
+      }
+      .progress-step.completed + .progress-step-line {
+        background: var(--primary);
+      }
+      .progress-step-label {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-align: center;
+      }
+
+      .va-display {
+        background: var(--bg-secondary);
+        border: 2px dashed var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        text-align: center;
+        margin: var(--space-4) 0;
+      }
+      .va-number {
+        font-family: var(--font-mono);
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: var(--text-primary);
+        margin-bottom: var(--space-2);
+      }
+      .va-label {
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+      }
+      .va-bank {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        margin-bottom: var(--space-3);
+        font-weight: 600;
+      }
+
+      .section-header {
+        margin-bottom: var(--space-6);
+      }
+      .section-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+      }
+      .section-desc {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-top: var(--space-1);
+      }
+
+      .recent-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        padding: var(--space-3) 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .recent-item:last-child {
+        border-bottom: none;
+      }
+      .recent-item-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+      .recent-item-info {
+        flex: 1;
+      }
+      .recent-item-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .recent-item-date {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+      .recent-item-amount {
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      /* PERBAIKAN: Select All checkbox di SPP */
+      .spp-select-all-wrap {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-3) var(--space-4);
+        background: var(--bg-secondary);
+        font-weight: 600;
+        font-size: 0.82rem;
+        color: var(--text-secondary);
+        cursor: pointer;
+      }
+      .spp-select-all-wrap:hover {
+        color: var(--primary);
+      }
+
+      /* ===== RESPONSIVE - PERBAIKAN: hanya sembunyikan nav di mobile, bukan di semua ukuran ===== */
+      @media (max-width: 1023px) {
+        .navbar-nav {
+          display: none !important;
+          position: absolute;
+          top: 68px;
+          left: 0;
+          right: 0;
+          background: var(--bg-primary);
+          flex-direction: column;
+          padding: var(--space-4);
+          border-bottom: 1px solid var(--border-color);
+          box-shadow: var(--shadow-lg);
+          gap: var(--space-1);
+        }
+        .navbar-nav.active {
+          display: flex !important;
+        }
+        .mobile-menu-toggle {
+          display: block;
+        }
+        .nav-link {
+          width: 100%;
+          justify-content: flex-start;
+          padding: var(--space-3) var(--space-4);
+        }
+        .saldo-amount {
+          font-size: 1.75rem;
+        }
+        .grid-cols-2,
+        .grid-cols-3,
+        .grid-cols-4 {
+          grid-template-columns: 1fr;
+        }
+        .quick-access-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .provider-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .nominal-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stat-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .toast-container {
+          left: var(--space-4);
+          right: var(--space-4);
+          max-width: none;
+        }
+        .modal {
+          margin: var(--space-4);
+          max-height: calc(100vh - var(--space-8));
+        }
+        .table-container {
+          font-size: 0.82rem;
+        }
+        th,
+        td {
+          padding: var(--space-2) var(--space-3);
+        }
+        .filter-bar {
+          overflow-x: auto;
+          flex-wrap: nowrap;
+          padding-bottom: var(--space-2);
+        }
+        .filter-btn {
+          white-space: nowrap;
+        }
+      }
+      @media (min-width: 640px) and (max-width: 1023px) {
+        .grid-cols-2 {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .quick-access-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .provider-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .nominal-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .stat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .saldo-amount {
+          font-size: 2rem;
+        }
+      }
+      @media (min-width: 1024px) {
+        .quick-access-grid {
+          grid-template-columns: repeat(6, 1fr);
+        }
+        .provider-grid {
+          grid-template-columns: repeat(6, 1fr);
+        }
+        .nominal-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .stat-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .section {
+          padding: var(--space-10) 0;
+        }
+        .container {
+          padding: 0 var(--space-8);
+        }
+      }
+      @media (min-width: 1280px) {
+        .container {
+          max-width: 1280px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+      @media (prefers-contrast: high) {
+        :root {
+          --primary: #006666;
+          --primary-dark: #004d4d;
+          --text-primary: #000;
+          --text-secondary: #333;
+          --border-color: #000;
+        }
+        .card,
+        .quick-access-item,
+        .provider-card,
+        .nominal-card {
+          border-width: 3px;
+        }
+        .btn {
+          border: 2px solid currentColor;
+        }
+      }
+
+      @media print {
+        @page {
+          size: 80mm 297mm;
+          margin: 0;
+        }
+        body {
+          background: white !important;
+          color: black !important;
+          font-size: 12pt;
+          line-height: 1.4;
+        }
+        .navbar,
+        .mobile-menu-toggle,
+        .theme-toggle,
+        .nav-link,
+        .btn:not(.print-only),
+        .filter-bar,
+        .toast-container,
+        .loading-overlay,
+        .modal-overlay:not(.print-modal),
+        .quick-access-grid,
+        .promo-banner,
+        .saldo-actions,
+        .progress-steps,
+        .payment-methods,
+        .form-group,
+        .provider-grid,
+        .nominal-grid,
+        .spp-checkbox,
+        .spp-total-bar,
+        .modal-footer,
+        .skip-link {
+          display: none !important;
+        }
+        .section {
+          display: none !important;
+          padding: 0 !important;
+          min-height: auto !important;
+        }
+        .section.active {
+          display: block !important;
+        }
+        .receipt,
+        .modal-receipt .modal-body,
+        .bill-result {
+          display: block !important;
+          background: white !important;
+          color: black !important;
+          border: 2px solid black !important;
+          box-shadow: none !important;
+          padding: 20px !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+        }
+        .receipt-header,
+        .receipt-footer {
+          text-align: center !important;
+          border-color: black !important;
+        }
+        .receipt-logo {
+          color: black !important;
+        }
+        .receipt-row {
+          display: flex !important;
+          justify-content: space-between !important;
+          padding: 4px 0 !important;
+          border-bottom: 1px dotted #ccc !important;
+        }
+        .receipt-row.total {
+          border-top: 2px solid black !important;
+          border-bottom: 2px solid black !important;
+          font-weight: bold !important;
+          font-size: 14pt !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Langsung ke konten utama</a>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" role="navigation" aria-label="Navigasi utama">
+      <div class="navbar-inner">
+        <div
+          class="navbar-brand"
+          onclick="navigateTo('home')"
+          tabindex="0"
+          role="button"
+          aria-label="BayarKita Beranda"
+        >
+          <div class="navbar-brand-icon"><i class="fas fa-wallet"></i></div>
+          BayarKita
+        </div>
+        <button
+          class="mobile-menu-toggle"
+          onclick="toggleMobileMenu()"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <i class="fas fa-bars" id="menuIcon"></i>
+        </button>
+        <ul class="navbar-nav" id="navbarNav" role="menubar">
+          <li role="none">
+            <button
+              class="nav-link active"
+              data-section="home"
+              onclick="navigateTo('home')"
+              role="menuitem"
+            >
+              <i class="fas fa-home"></i> Beranda
+            </button>
+          </li>
+          <li role="none">
+            <button
+              class="nav-link"
+              data-section="spp"
+              onclick="navigateTo('spp')"
+              role="menuitem"
+            >
+              <i class="fas fa-graduation-cap"></i> Bayar SPP
+            </button>
+          </li>
+          <li role="none">
+            <button
+              class="nav-link"
+              data-section="pln"
+              onclick="navigateTo('pln')"
+              role="menuitem"
+            >
+              <i class="fas fa-bolt"></i> PLN
+            </button>
+          </li>
+          <li role="none">
+            <button
+              class="nav-link"
+              data-section="pdam"
+              onclick="navigateTo('pdam')"
+              role="menuitem"
+            >
+              <i class="fas fa-droplet"></i> PDAM
+            </button>
+          </li>
+          <li role="none">
+            <button
+              class="nav-link"
+              data-section="pulsa"
+              onclick="navigateTo('pulsa')"
+              role="menuitem"
+            >
+              <i class="fas fa-mobile-screen"></i> Pulsa
+            </button>
+          </li>
+          <li role="none">
+            <button
+              class="nav-link"
+              data-section="riwayat"
+              onclick="navigateTo('riwayat')"
+              role="menuitem"
+            >
+              <i class="fas fa-clock-rotate-left"></i> Riwayat
+            </button>
+          </li>
+        </ul>
+        <button
+          class="theme-toggle"
+          onclick="toggleTheme()"
+          aria-label="Ganti tema"
+        >
+          <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main id="main-content">
+      <!-- ===== HOME SECTION ===== -->
+      <section class="section active" id="section-home" aria-label="Beranda">
+        <div class="container">
+          <div class="saldo-card mb-6">
+            <div class="saldo-label">Saldo Anda</div>
+            <div class="saldo-amount" id="saldoDisplay">Rp 2.450.000</div>
+            <div class="saldo-actions">
+              <button
+                class="saldo-btn"
+                onclick="
+                  showToast('info', 'Top Up', 'Fitur top up akan segera hadir')
+                "
+              >
+                <i class="fas fa-plus"></i> Top Up
+              </button>
+              <button class="saldo-btn" onclick="navigateTo('riwayat')">
+                <i class="fas fa-arrow-right-arrow-left"></i> Riwayat
+              </button>
+            </div>
+          </div>
+
+          <div class="quick-access-grid">
+            <div
+              class="quick-access-item"
+              onclick="navigateTo('spp')"
+              tabindex="0"
+              role="button"
+              aria-label="Bayar SPP"
+            >
+              <div class="quick-access-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="quick-access-label">Bayar SPP</div>
+            </div>
+            <div
+              class="quick-access-item"
+              onclick="navigateTo('pln')"
+              tabindex="0"
+              role="button"
+              aria-label="Listrik PLN"
+            >
+              <div class="quick-access-icon"><i class="fas fa-bolt"></i></div>
+              <div class="quick-access-label">Listrik PLN</div>
+            </div>
+            <div
+              class="quick-access-item"
+              onclick="navigateTo('pdam')"
+              tabindex="0"
+              role="button"
+              aria-label="Air PDAM"
+            >
+              <div class="quick-access-icon">
+                <i class="fas fa-droplet"></i>
+              </div>
+              <div class="quick-access-label">Air PDAM</div>
+            </div>
+            <div
+              class="quick-access-item"
+              onclick="navigateTo('pulsa')"
+              tabindex="0"
+              role="button"
+              aria-label="Pulsa & Data"
+            >
+              <div class="quick-access-icon">
+                <i class="fas fa-mobile-screen"></i>
+              </div>
+              <div class="quick-access-label">Pulsa & Data</div>
+            </div>
+            <div
+              class="quick-access-item"
+              onclick="navigateTo('riwayat')"
+              tabindex="0"
+              role="button"
+              aria-label="Riwayat Transaksi"
+            >
+              <div class="quick-access-icon">
+                <i class="fas fa-clock-rotate-left"></i>
+              </div>
+              <div class="quick-access-label">Riwayat</div>
+            </div>
+            <div
+              class="quick-access-item"
+              onclick="
+                showToast(
+                  'info',
+                  'Coming Soon',
+                  'Fitur lainnya akan segera hadir',
+                )
+              "
+              tabindex="0"
+              role="button"
+              aria-label="Lainnya"
+            >
+              <div class="quick-access-icon">
+                <i class="fas fa-ellipsis"></i>
+              </div>
+              <div class="quick-access-label">Lainnya</div>
+            </div>
+          </div>
+
+          <div class="promo-banner">
+            <div class="promo-banner-content">
+              <span class="promo-banner-tag">PROMO</span>
+              <div class="promo-banner-title">
+                Cashback 10% Bayar SPP Bulan Ini
+              </div>
+              <div class="promo-banner-desc">
+                Bayar SPP melalui BayarKita dan dapatkan cashback hingga Rp
+                50.000. Berlaku untuk semua jenjang pendidikan.
+              </div>
+              <button class="promo-banner-btn" onclick="navigateTo('spp')">
+                Bayar Sekarang
+              </button>
+            </div>
+          </div>
+
+          <div class="card mt-6">
+            <div class="card-header flex justify-between items-center">
+              <div class="card-title">Transaksi Terakhir</div>
+              <button
+                class="btn btn-ghost btn-sm"
+                onclick="navigateTo('riwayat')"
+              >
+                Lihat Semua <i class="fas fa-arrow-right"></i>
+              </button>
+            </div>
+            <div id="recentTransactions"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SPP SECTION ===== -->
+      <section class="section" id="section-spp" aria-label="Bayar SPP">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Bayar SPP</h2>
+            <p class="section-desc">
+              Pilih bulan SPP yang ingin dibayar, lalu lanjutkan ke pembayaran
+            </p>
+          </div>
+
+          <!-- Progress Steps -->
+          <div class="progress-steps" id="sppProgress">
+            <div class="progress-step active" data-step="1">
+              <div class="progress-step-circle">1</div>
+              <span class="progress-step-label">Pilih Bulan</span>
+            </div>
+            <div class="progress-step-line"></div>
+            <div class="progress-step" data-step="2">
+              <div class="progress-step-circle">2</div>
+              <span class="progress-step-label">Konfirmasi</span>
+            </div>
+            <div class="progress-step-line"></div>
+            <div class="progress-step" data-step="3">
+              <div class="progress-step-circle">3</div>
+              <span class="progress-step-label">Pembayaran</span>
+            </div>
+            <div class="progress-step-line"></div>
+            <div class="progress-step" data-step="4">
+              <div class="progress-step-circle">4</div>
+              <span class="progress-step-label">Selesai</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Pilih Bulan -->
+          <div id="sppStep1">
+            <div class="card mb-4">
+              <div class="card-header">
+                <div class="card-title">Data Siswa</div>
+                <div class="card-subtitle">
+                  Masukkan NIM untuk melihat tagihan SPP
+                </div>
+              </div>
+              <div class="grid grid-cols-1" style="gap: var(--space-4)">
+                <div class="form-group" style="margin-bottom: 0">
+                  <label class="form-label" for="sppNis"
+                    >NIM (Nomor Induk Siswa)</label
+                  >
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="sppNim"
+                    placeholder="Contoh: 2024001234"
+                    maxlength="15"
+                  />
+                  <div class="error-message" id="sppNimError">
+                    NIM tidak ditemukan. Coba: 2024001234
+                  </div>
+                </div>
+                <button
+                  class="btn btn-primary btn-block"
+                  onclick="cariSPP()"
+                  id="btnCariSPP"
+                >
+                  <i class="fas fa-search"></i> Cek Tagihan SPP
+                </button>
+              </div>
+            </div>
+
+            <div class="card hidden" id="sppTableCard">
+              <div class="card-header flex justify-between items-center">
+                <div>
+                  <div class="card-title" id="sppNamaSiswa">-</div>
+                  <div class="card-subtitle" id="sppKelasSiswa">-</div>
+                </div>
+                <span class="badge badge-info" id="sppTahunAjaran">-</span>
+              </div>
+              <div class="table-container">
+                <table class="spp-table" role="grid">
+                  <thead>
+                    <tr>
+                      <th style="width: 40px">
+                        <label
+                          class="spp-select-all-wrap"
+                          style="background: none; padding: 0"
+                        >
+                          <input
+                            type="checkbox"
+                            class="spp-checkbox"
+                            id="sppSelectAll"
+                            onchange="toggleAllSPP(this.checked)"
+                          />
+                        </label>
+                      </th>
+                      <th>Bulan</th>
+                      <th>Tahun</th>
+                      <th>Jumlah</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sppTableBody">
+                    <!-- Diisi oleh JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="spp-total-bar hidden" id="sppTotalBar">
+                <div class="spp-total-label">Total yang dipilih:</div>
+                <div class="spp-total-amount" id="sppTotalAmount">Rp 0</div>
+              </div>
+              <div class="mt-4" style="display: flex; gap: var(--space-3)">
+                <button
+                  class="btn btn-primary btn-block"
+                  id="btnLanjutBayar"
+                  onclick="lanjutBayarSPP()"
+                  disabled
+                >
+                  <i class="fas fa-arrow-right"></i> Lanjutkan Pembayaran
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Konfirmasi -->
+          <div id="sppStep2" class="hidden">
+            <div class="card mb-4">
+              <div class="card-header">
+                <div class="card-title">Ringkasan Pembayaran</div>
+                <div class="card-subtitle">
+                  Periksa kembali detail pembayaran Anda
+                </div>
+              </div>
+              <div
+                class="bill-result"
+                style="margin-top: 0; border: none; padding: 0"
+              >
+                <div class="bill-result-detail" id="sppSummaryDetail"></div>
+                <div class="bill-result-total">
+                  <div class="bill-result-total-label">Total Bayar</div>
+                  <div class="bill-result-total-value" id="sppSummaryTotal">
+                    Rp 0
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: var(--space-3)">
+              <button class="btn btn-outline" onclick="sppGoStep(1)">
+                <i class="fas fa-arrow-left"></i> Kembali
+              </button>
+              <button
+                class="btn btn-primary"
+                style="flex: 1"
+                onclick="sppGoStep(3)"
+              >
+                <i class="fas fa-credit-card"></i> Pilih Metode Pembayaran
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 3: Metode Pembayaran -->
+          <div id="sppStep3" class="hidden">
+            <div class="card mb-4">
+              <div class="card-header">
+                <div class="card-title">Pilih Metode Pembayaran</div>
+                <div class="card-subtitle">
+                  Total: <strong id="sppPayTotal">Rp 0</strong>
+                </div>
+              </div>
+              <div class="payment-methods" id="sppPaymentMethods">
+                <div
+                  class="payment-method"
+                  onclick="selectPaymentMethod(this, 'bca')"
+                  tabindex="0"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <div class="payment-method-radio"></div>
+                  <div
+                    class="payment-method-icon"
+                    style="
+                      background: #003d79;
+                      color: white;
+                      font-weight: 800;
+                      font-size: 0.75rem;
+                    "
+                  >
+                    BCA
+                  </div>
+                  <div class="payment-method-info">
+                    <div class="payment-method-name">Virtual Account BCA</div>
+                    <div class="payment-method-desc">
+                      Bayar via ATM, m-banking, atau internet banking BCA
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="payment-method"
+                  onclick="selectPaymentMethod(this, 'bni')"
+                  tabindex="0"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <div class="payment-method-radio"></div>
+                  <div
+                    class="payment-method-icon"
+                    style="
+                      background: #ec6726;
+                      color: white;
+                      font-weight: 800;
+                      font-size: 0.75rem;
+                    "
+                  >
+                    BNI
+                  </div>
+                  <div class="payment-method-info">
+                    <div class="payment-method-name">Virtual Account BNI</div>
+                    <div class="payment-method-desc">
+                      Bayar via ATM, m-banking, atau internet banking BNI
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="payment-method"
+                  onclick="selectPaymentMethod(this, 'mandiri')"
+                  tabindex="0"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <div class="payment-method-radio"></div>
+                  <div
+                    class="payment-method-icon"
+                    style="
+                      background: #003868;
+                      color: white;
+                      font-weight: 800;
+                      font-size: 0.65rem;
+                    "
+                  >
+                    MDR
+                  </div>
+                  <div class="payment-method-info">
+                    <div class="payment-method-name">
+                      Virtual Account Mandiri
+                    </div>
+                    <div class="payment-method-desc">
+                      Bayar via ATM, m-banking, atau internet banking Mandiri
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="payment-method"
+                  onclick="selectPaymentMethod(this, 'bri')"
+                  tabindex="0"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <div class="payment-method-radio"></div>
+                  <div
+                    class="payment-method-icon"
+                    style="
+                      background: #00529c;
+                      color: white;
+                      font-weight: 800;
+                      font-size: 0.75rem;
+                    "
+                  >
+                    BRI
+                  </div>
+                  <div class="payment-method-info">
+                    <div class="payment-method-name">Virtual Account BRI</div>
+                    <div class="payment-method-desc">
+                      Bayar via ATM, m-banking, atau internet banking BRI
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: var(--space-3)">
+              <button class="btn btn-outline" onclick="sppGoStep(2)">
+                <i class="fas fa-arrow-left"></i> Kembali
+              </button>
+              <button
+                class="btn btn-primary"
+                style="flex: 1"
+                id="btnBayarSPP"
+                onclick="prosesBayarSPP()"
+                disabled
+              >
+                <i class="fas fa-check-circle"></i> Bayar Sekarang
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 4: Selesai -->
+          <div id="sppStep4" class="hidden">
+            <div class="card">
+              <div class="text-center mb-4">
+                <div
+                  style="
+                    width: 72px;
+                    height: 72px;
+                    background: rgba(34, 197, 94, 0.1);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto var(--space-4);
+                    font-size: 2rem;
+                    color: var(--success);
+                  "
+                >
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Pembayaran Berhasil</h3>
+                <p class="text-sm text-muted mt-2">
+                  Pembayaran SPP Anda telah berhasil diproses
+                </p>
+              </div>
+              <div class="va-display" id="sppVADisplay">
+                <div class="va-bank" id="sppVABank">
+                  <i class="fas fa-building-columns"></i> <span>-</span>
+                </div>
+                <div class="va-label">Nomor Virtual Account</div>
+                <div class="va-number" id="sppVANumber">-</div>
+                <div class="va-label mt-2">
+                  Silakan bayar sebelum batas waktu
+                </div>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  gap: var(--space-3);
+                  margin-top: var(--space-4);
+                "
+              >
+                <button
+                  class="btn btn-outline"
+                  style="flex: 1"
+                  onclick="showReceipt('spp')"
+                >
+                  <i class="fas fa-receipt"></i> Lihat Struk
+                </button>
+                <button
+                  class="btn btn-primary"
+                  style="flex: 1"
+                  onclick="resetSPP()"
+                >
+                  <i class="fas fa-home"></i> Kembali ke Beranda
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== PLN SECTION ===== -->
+      <section class="section" id="section-pln" aria-label="Listrik PLN">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Listrik PLN</h2>
+            <p class="section-desc">Bayar tagihan listrik PLN bulanan</p>
+          </div>
+          <div class="card mb-4">
+            <div class="form-group">
+              <label class="form-label" for="plnId">ID Pelanggan PLN</label>
+              <input
+                type="text"
+                class="form-input"
+                id="plnId"
+                placeholder="Contoh: 543210987654"
+                maxlength="20"
+              />
+            </div>
+            <button class="btn btn-primary btn-block" onclick="cekPLN()">
+              <i class="fas fa-search"></i> Cek Tagihan
+            </button>
+          </div>
+          <div id="plnResult" class="hidden"></div>
+        </div>
+      </section>
+
+      <!-- ===== PDAM SECTION ===== -->
+      <section class="section" id="section-pdam" aria-label="Air PDAM">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Air PDAM</h2>
+            <p class="section-desc">Bayar tagihan air PDAM bulanan</p>
+          </div>
+          <div class="card mb-4">
+            <div class="form-group">
+              <label class="form-label" for="pdamId">No. Sambungan PDAM</label>
+              <input
+                type="text"
+                class="form-input"
+                id="pdamId"
+                placeholder="Contoh: 12345678"
+                maxlength="15"
+              />
+            </div>
+            <button class="btn btn-primary btn-block" onclick="cekPDAM()">
+              <i class="fas fa-search"></i> Cek Tagihan
+            </button>
+          </div>
+          <div id="pdamResult" class="hidden"></div>
+        </div>
+      </section>
+
+      <!-- ===== PULSA SECTION ===== -->
+      <section class="section" id="section-pulsa" aria-label="Pulsa dan Data">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Pulsa & Data</h2>
+            <p class="section-desc">Beli pulsa dan paket data semua operator</p>
+          </div>
+          <div class="card mb-4">
+            <div class="form-group">
+              <label class="form-label" for="pulsaNo">Nomor HP</label>
+              <input
+                type="tel"
+                class="form-input"
+                id="pulsaNo"
+                placeholder="08xx xxxx xxxx"
+                maxlength="15"
+              />
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header">
+              <div class="card-title">Pilih Operator</div>
+            </div>
+            <div class="provider-grid" id="pulsaProviders">
+              <div
+                class="provider-card"
+                onclick="selectProvider(this, 'telkomsel')"
+                tabindex="0"
+                role="radio"
+                aria-checked="false"
+              >
+                <div class="provider-card-logo" style="background: #e4002b">
+                  TSEL
+                </div>
+                <div class="provider-card-name">Telkomsel</div>
+              </div>
+              <div
+                class="provider-card"
+                onclick="selectProvider(this, 'xl')"
+                tabindex="0"
+                role="radio"
+                aria-checked="false"
+              >
+                <div class="provider-card-logo" style="background: #0064d2">
+                  XL
+                </div>
+                <div class="provider-card-name">XL Axiata</div>
+              </div>
+              <div
+                class="provider-card"
+                onclick="selectProvider(this, 'indosat')"
+                tabindex="0"
+                role="radio"
+                aria-checked="false"
+              >
+                <div
+                  class="provider-card-logo"
+                  style="background: #ffd600; color: #333"
+                >
+                  ISAT
+                </div>
+                <div class="provider-card-name">Indosat</div>
+              </div>
+              <div
+                class="provider-card"
+                onclick="selectProvider(this, 'tri')"
+                tabindex="0"
+                role="radio"
+                aria-checked="false"
+              >
+                <div class="provider-card-logo" style="background: #e60012">
+                  3
+                </div>
+                <div class="provider-card-name">Tri</div>
+              </div>
+              <div
+                class="provider-card"
+                onclick="selectProvider(this, 'smartfren')"
+                tabindex="0"
+                role="radio"
+                aria-checked="false"
+              >
+                <div class="provider-card-logo" style="background: #ff0000">
+                  SF
+                </div>
+                <div class="provider-card-name">Smartfren</div>
+              </div>
+              <div
+                class="provider-card"
+                onclick="selectProvider(this, 'axis')"
+                tabindex="0"
+                role="radio"
+                aria-checked="false"
+              >
+                <div class="provider-card-logo" style="background: #6b2fa0">
+                  AXIS
+                </div>
+                <div class="provider-card-name">Axis</div>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4 hidden" id="pulsaNominalCard">
+            <div class="card-header">
+              <div class="card-title">Pilih Nominal</div>
+            </div>
+            <div class="nominal-grid" id="pulsaNominals"></div>
+            <div class="mt-4">
+              <button
+                class="btn btn-primary btn-block"
+                id="btnBeliPulsa"
+                onclick="beliPulsa()"
+                disabled
+              >
+                <i class="fas fa-shopping-cart"></i> Beli Sekarang
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== RIWAYAT SECTION ===== -->
+      <section
+        class="section"
+        id="section-riwayat"
+        aria-label="Riwayat Transaksi"
+      >
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Riwayat Transaksi</h2>
+            <p class="section-desc">Semua transaksi pembayaran Anda</p>
+          </div>
+          <div class="stat-grid" id="riwayatStats"></div>
+          <div class="filter-bar" id="riwayatFilter">
+            <button
+              class="filter-btn active"
+              onclick="filterRiwayat('semua', this)"
+            >
+              Semua
+            </button>
+            <button class="filter-btn" onclick="filterRiwayat('spp', this)">
+              SPP
+            </button>
+            <button class="filter-btn" onclick="filterRiwayat('pln', this)">
+              PLN
+            </button>
+            <button class="filter-btn" onclick="filterRiwayat('pdam', this)">
+              PDAM
+            </button>
+            <button class="filter-btn" onclick="filterRiwayat('pulsa', this)">
+              Pulsa
+            </button>
+          </div>
+          <div class="card">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tanggal</th>
+                    <th>Jenis</th>
+                    <th>Deskripsi</th>
+                    <th>Jumlah</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="riwayatTableBody"></tbody>
+              </table>
+            </div>
+            <div class="empty-state hidden" id="riwayatEmpty">
+              <div class="empty-state-icon"><i class="fas fa-inbox"></i></div>
+              <div class="empty-state-title">Belum Ada Transaksi</div>
+              <div class="empty-state-desc">
+                Transaksi Anda akan muncul di sini
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ===== LOADING OVERLAY ===== -->
+    <div
+      class="loading-overlay"
+      id="loadingOverlay"
+      role="alert"
+      aria-live="assertive"
+    >
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Memproses...</div>
+        <div class="loading-subtext" id="loadingSubtext">
+          Mohon tunggu sebentar
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <!-- ===== MODAL ===== -->
+    <div
+      class="modal-overlay"
+      id="modalOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+      <div class="modal modal-receipt" id="modalContent">
+        <div class="modal-header">
+          <div class="modal-title" id="modalTitle">Struk Pembayaran</div>
+          <button class="modal-close" onclick="closeModal()" aria-label="Tutup">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="closeModal()">Tutup</button>
+          <button class="btn btn-primary" onclick="printReceipt()">
+            <i class="fas fa-print"></i> Cetak
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+      /* ============================================
+         DATA & STATE
+      ============================================ */
+      let saldo = 2450000;
+      let currentSection = "home";
+      let selectedSPPItems = [];
+      let selectedPaymentMethod = null;
+      let selectedProvider = null;
+      let selectedNominal = null;
+      let sppData = null;
+      let lastReceiptData = null;
+
+      // Data SPP dummy
+      const sppDatabase = {
+        2024001234: {
+          nama: "Ahmad Fauzan",
+          kelas: "07TPLE004",
+          sekolah: "Universitas Pamulang",
+          tahunAjaran: "2025/2026",
+          nominalPerBulan: 450000,
+          tagihan: [
+            { bulan: "Januari", tahun: 2025, jumlah: 450000, status: "lunas" },
+            { bulan: "Februari", tahun: 2025, jumlah: 450000, status: "lunas" },
+            { bulan: "Maret", tahun: 2025, jumlah: 450000, status: "belum" },
+            { bulan: "April", tahun: 2025, jumlah: 450000, status: "belum" },
+            { bulan: "Mei", tahun: 2025, jumlah: 450000, status: "belum" },
+            { bulan: "Juni", tahun: 2025, jumlah: 450000, status: "belum" },
+          ],
+        },
+        2024005678: {
+          nama: "Siti Nurhaliza",
+          kelas: "07TPLE002",
+          sekolah: "Universitas Pamulang",
+          tahunAjaran: "2025/2026",
+          nominalPerBulan: 750000,
+          tagihan: [
+            { bulan: "Januari", tahun: 2025, jumlah: 750000, status: "lunas" },
+            { bulan: "Februari", tahun: 2025, jumlah: 750000, status: "belum" },
+            { bulan: "Maret", tahun: 2025, jumlah: 750000, status: "belum" },
+            { bulan: "April", tahun: 2025, jumlah: 750000, status: "belum" },
+            { bulan: "Mei", tahun: 2025, jumlah: 750000, status: "belum" },
+            { bulan: "Juni", tahun: 2025, jumlah: 750000, status: "belum" },
+          ],
+        },
+      };
+
+      // Data PLN dummy
+      const plnDatabase = {
+        543210987654: {
+          nama: "Budi Santoso",
+          alamat: "Jl. Merdeka No. 45, Bandung",
+          tarif: "R1/450VA",
+          tagihan: 356000,
+          denda: 0,
+          admin: 2500,
+          periode: "Maret 2025",
+        },
+        123456789012: {
+          nama: "Dewi Lestari",
+          alamat: "Jl. Sudirman No. 12, Jakarta",
+          tarif: "R1/900VA",
+          tagihan: 578000,
+          denda: 15000,
+          admin: 2500,
+          periode: "Maret 2025",
+        },
+      };
+
+      // Data PDAM dummy
+      const pdamDatabase = {
+        12345678: {
+          nama: "Rina Wati",
+          alamat: "Jl. Cempaka No. 8, Surabaya",
+          golongan: "R-2",
+          tagihan: 125000,
+          denda: 0,
+          admin: 2000,
+          periode: "Maret 2025",
+        },
+        87654321: {
+          nama: "Hendra Gunawan",
+          alamat: "Jl. Kenanga No. 21, Malang",
+          golongan: "R-1",
+          tagihan: 85000,
+          denda: 10000,
+          admin: 2000,
+          periode: "Maret 2025",
+        },
+      };
+
+      // Data nominal pulsa
+      const pulsaNominals = [
+        { amount: 5000, price: 6000, label: "Rp 5.000" },
+        { amount: 10000, price: 11000, label: "Rp 10.000" },
+        { amount: 15000, price: 16000, label: "Rp 15.000" },
+        { amount: 25000, price: 26000, label: "Rp 25.000" },
+        { amount: 50000, price: 51000, label: "Rp 50.000" },
+        { amount: 100000, price: 101000, label: "Rp 100.000" },
+      ];
+
+      // Riwayat transaksi awal
+      let transactions = [
+        {
+          id: "TRX-001",
+          date: "2025-02-15",
+          type: "spp",
+          desc: "SPP Januari - Ahmad Fauzan",
+          amount: 450000,
+          status: "sukses",
+        },
+        {
+          id: "TRX-002",
+          date: "2025-02-20",
+          type: "pln",
+          desc: "PLN - Budi Santoso",
+          amount: 358500,
+          status: "sukses",
+        },
+        {
+          id: "TRX-003",
+          date: "2025-03-01",
+          type: "pulsa",
+          desc: "Pulsa Telkomsel 25.000",
+          amount: 26000,
+          status: "sukses",
+        },
+      ];
+
+      /* ============================================
+         NAVIGASI
+      ============================================ */
+      function navigateTo(section) {
+        // Sembunyikan semua section
+        document.querySelectorAll(".section").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        // Tampilkan section yang dipilih
+        var target = document.getElementById("section-" + section);
+        if (target) {
+          target.classList.add("active");
+        }
+        // Update nav link aktif
+        document.querySelectorAll(".nav-link").forEach(function (link) {
+          link.classList.remove("active");
+          if (link.getAttribute("data-section") === section) {
+            link.classList.add("active");
+          }
+        });
+        currentSection = section;
+        // Tutup mobile menu
+        closeMobileMenu();
+        // Scroll ke atas
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        // Render data section tertentu
+        if (section === "riwayat") renderRiwayat();
+        if (section === "home") renderRecentTransactions();
+      }
+
+      function toggleMobileMenu() {
+        var nav = document.getElementById("navbarNav");
+        var icon = document.getElementById("menuIcon");
+        var btn = document.querySelector(".mobile-menu-toggle");
+        nav.classList.toggle("active");
+        var isOpen = nav.classList.contains("active");
+        icon.className = isOpen ? "fas fa-times" : "fas fa-bars";
+        btn.setAttribute("aria-expanded", isOpen);
+      }
+
+      function closeMobileMenu() {
+        var nav = document.getElementById("navbarNav");
+        var icon = document.getElementById("menuIcon");
+        var btn = document.querySelector(".mobile-menu-toggle");
+        nav.classList.remove("active");
+        icon.className = "fas fa-bars";
+        btn.setAttribute("aria-expanded", "false");
+      }
+
+      /* ============================================
+         TEMA
+      ============================================ */
+      function toggleTheme() {
+        var html = document.documentElement;
+        var icon = document.getElementById("themeIcon");
+        var isDark = html.getAttribute("data-theme") === "dark";
+        html.setAttribute("data-theme", isDark ? "light" : "dark");
+        icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+        localStorage.setItem("bayarkita-theme", isDark ? "light" : "dark");
+      }
+
+      // Load tema tersimpan
+      (function () {
+        var saved = localStorage.getItem("bayarkita-theme");
+        if (saved === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+          document.getElementById("themeIcon").className = "fas fa-sun";
+        }
+      })();
+
+      /* ============================================
+         FORMAT UANG
+      ============================================ */
+      function formatRupiah(num) {
+        return "Rp " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      function generateTrxId() {
+        return (
+          "TRX-" +
+          Date.now().toString().slice(-6) +
+          Math.random().toString(36).substring(2, 5).toUpperCase()
+        );
+      }
+
+      function getTodayDate() {
+        return new Date().toISOString().split("T")[0];
+      }
+
+      /* ============================================
+         TOAST
+      ============================================ */
+      function showToast(type, title, message) {
+        var container = document.getElementById("toastContainer");
+        var iconMap = {
+          success: "fa-check-circle",
+          error: "fa-times-circle",
+          warning: "fa-exclamation-triangle",
+          info: "fa-info-circle",
+        };
+        var toast = document.createElement("div");
+        toast.className = "toast " + type;
+        toast.innerHTML =
+          '<div class="toast-icon"><i class="fas ' +
+          iconMap[type] +
+          '"></i></div>' +
+          '<div class="toast-content"><div class="toast-title">' +
+          title +
+          '</div><div class="toast-message">' +
+          message +
+          "</div></div>" +
+          '<button class="toast-close" onclick="this.parentElement.remove()" aria-label="Tutup"><i class="fas fa-times"></i></button>';
+        container.appendChild(toast);
+        setTimeout(function () {
+          if (toast.parentElement) {
+            toast.style.animation = "slideOut 0.3s ease forwards";
+            setTimeout(function () {
+              toast.remove();
+            }, 300);
+          }
+        }, 4000);
+      }
+
+      /* ============================================
+         LOADING
+      ============================================ */
+      function showLoading(text, subtext) {
+        document.getElementById("loadingText").textContent =
+          text || "Memproses...";
+        document.getElementById("loadingSubtext").textContent =
+          subtext || "Mohon tunggu sebentar";
+        document.getElementById("loadingOverlay").classList.add("active");
+      }
+      function hideLoading() {
+        document.getElementById("loadingOverlay").classList.remove("active");
+      }
+
+      /* ============================================
+         MODAL
+      ============================================ */
+      function openModal(title, bodyHtml) {
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalBody").innerHTML = bodyHtml;
+        document.getElementById("modalOverlay").classList.add("active");
+      }
+      function closeModal() {
+        document.getElementById("modalOverlay").classList.remove("active");
+      }
+      function printReceipt() {
+        window.print();
+      }
+
+      /* ============================================
+         UPDATE SALDO
+      ============================================ */
+      function updateSaldoDisplay() {
+        document.getElementById("saldoDisplay").textContent =
+          formatRupiah(saldo);
+      }
+
+      /* ============================================
+         SPP - CARI
+      ============================================ */
+      function cariSPP() {
+        var nim = document.getElementById("sppNim").value.trim();
+        var errorEl = document.getElementById("sppNimError");
+        var inputEl = document.getElementById("sppNim");
+
+        if (!nim) {
+          inputEl.classList.add("error");
+          errorEl.textContent = "NIM tidak boleh kosong";
+          errorEl.classList.add("show");
+          return;
+        }
+
+        inputEl.classList.remove("error");
+        errorEl.classList.remove("show");
+
+        showLoading("Mencari Data SPP", "Menampilkan tagihan untuk NIM " + nim);
+
+        setTimeout(function () {
+          hideLoading();
+          var data = sppDatabase[nim];
+          if (!data) {
+            inputEl.classList.add("error");
+            errorEl.textContent =
+              "NIM tidak ditemukan. Coba: 2024001234 atau 2024005678";
+            errorEl.classList.add("show");
+            document.getElementById("sppTableCard").classList.add("hidden");
+            return;
+          }
+
+          sppData = data;
+          selectedSPPItems = [];
+
+          // Isi info siswa
+          document.getElementById("sppNamaSiswa").textContent = data.nama;
+          document.getElementById("sppKelasSiswa").textContent =
+            data.kelas + " - " + data.sekolah;
+          document.getElementById("sppTahunAjaran").textContent =
+            data.tahunAjaran;
+
+          // Isi tabel
+          var tbody = document.getElementById("sppTableBody");
+          tbody.innerHTML = "";
+          data.tagihan.forEach(function (tag, idx) {
+            var isLunas = tag.status === "lunas";
+            var tr = document.createElement("tr");
+            tr.setAttribute("data-index", idx);
+            if (isLunas) tr.style.opacity = "0.5";
+            tr.innerHTML =
+              '<td><input type="checkbox" class="spp-checkbox" data-idx="' +
+              idx +
+              '"' +
+              (isLunas ? " disabled" : "") +
+              ' onchange="toggleSPPItem(' +
+              idx +
+              ', this.checked)"></td>' +
+              "<td>" +
+              tag.bulan +
+              "</td>" +
+              "<td>" +
+              tag.tahun +
+              "</td>" +
+              "<td>" +
+              formatRupiah(tag.jumlah) +
+              "</td>" +
+              '<td><span class="badge ' +
+              (isLunas ? "badge-success" : "badge-danger") +
+              '">' +
+              (isLunas ? "Lunas" : "Belum Bayar") +
+              "</span></td>";
+            // Klik baris juga toggle checkbox (jika belum lunas)
+            if (!isLunas) {
+              tr.addEventListener("click", function (e) {
+                if (e.target.type !== "checkbox") {
+                  var cb = tr.querySelector(".spp-checkbox");
+                  cb.checked = !cb.checked;
+                  toggleSPPItem(idx, cb.checked);
+                }
+              });
+            }
+            tbody.appendChild(tr);
+          });
+
+          // Reset select all
+          document.getElementById("sppSelectAll").checked = false;
+          document.getElementById("sppTotalBar").classList.add("hidden");
+          document.getElementById("btnLanjutBayar").disabled = true;
+
+          document.getElementById("sppTableCard").classList.remove("hidden");
+          showToast(
+            "success",
+            "Data Ditemukan",
+            "Menampilkan " + data.tagihan.length + " tagihan SPP",
+          );
+        }, 1200);
+      }
+
+      /* ============================================
+         SPP - TOGGLE ITEM
+      ============================================ */
+      function toggleSPPItem(idx, checked) {
+        if (checked) {
+          if (selectedSPPItems.indexOf(idx) === -1) {
+            selectedSPPItems.push(idx);
+          }
+        } else {
+          selectedSPPItems = selectedSPPItems.filter(function (i) {
+            return i !== idx;
+          });
+        }
+        updateSPPSelection();
+      }
+
+      function toggleAllSPP(checked) {
+        if (!sppData) return;
+        selectedSPPItems = [];
+        sppData.tagihan.forEach(function (tag, idx) {
+          var cb = document.querySelector(
+            '.spp-checkbox[data-idx="' + idx + '"]',
+          );
+          if (tag.status !== "lunas") {
+            if (checked) {
+              selectedSPPItems.push(idx);
+              if (cb) cb.checked = true;
+            } else {
+              if (cb) cb.checked = false;
+            }
+          }
+        });
+        updateSPPSelection();
+      }
+
+      function updateSPPSelection() {
+        var total = 0;
+        if (sppData) {
+          selectedSPPItems.forEach(function (idx) {
+            total += sppData.tagihan[idx].jumlah;
+          });
+        }
+        // Update tampilan baris terpilih
+        document.querySelectorAll("#sppTableBody tr").forEach(function (tr) {
+          var idx = parseInt(tr.getAttribute("data-index"));
+          if (selectedSPPItems.indexOf(idx) !== -1) {
+            tr.classList.add("selected");
+          } else {
+            tr.classList.remove("selected");
+          }
+        });
+
+        var totalBar = document.getElementById("sppTotalBar");
+        var btnLanjut = document.getElementById("btnLanjutBayar");
+        if (selectedSPPItems.length > 0) {
+          totalBar.classList.remove("hidden");
+          document.getElementById("sppTotalAmount").textContent =
+            formatRupiah(total);
+          btnLanjut.disabled = false;
+        } else {
+          totalBar.classList.add("hidden");
+          btnLanjut.disabled = true;
+        }
+
+        // Update select all checkbox state
+        var allCheckboxes = document.querySelectorAll(
+          ".spp-checkbox[data-idx]",
+        );
+        var allEnabled = [];
+        var allChecked = true;
+        allCheckboxes.forEach(function (cb) {
+          if (!cb.disabled) {
+            allEnabled.push(cb);
+            if (!cb.checked) allChecked = false;
+          }
+        });
+        document.getElementById("sppSelectAll").checked =
+          allEnabled.length > 0 && allChecked;
+      }
+
+      /* ============================================
+         SPP - STEP NAVIGATION
+      ============================================ */
+      function sppGoStep(step) {
+        // Sembunyikan semua step
+        for (var i = 1; i <= 4; i++) {
+          var el = document.getElementById("sppStep" + i);
+          if (el) el.classList.add("hidden");
+        }
+        // Tampilkan step tujuan
+        var target = document.getElementById("sppStep" + step);
+        if (target) target.classList.remove("hidden");
+
+        // Update progress steps
+        document
+          .querySelectorAll("#sppProgress .progress-step")
+          .forEach(function (ps) {
+            var s = parseInt(ps.getAttribute("data-step"));
+            ps.classList.remove("active", "completed");
+            if (s < step) ps.classList.add("completed");
+            if (s === step) ps.classList.add("active");
+          });
+
+        // Step 2: isi ringkasan
+        if (step === 2) {
+          renderSPPSummary();
+        }
+        // Step 3: reset payment method
+        if (step === 3) {
+          selectedPaymentMethod = null;
+          document
+            .querySelectorAll("#sppPaymentMethods .payment-method")
+            .forEach(function (pm) {
+              pm.classList.remove("selected");
+              pm.setAttribute("aria-checked", "false");
+            });
+          document.getElementById("btnBayarSPP").disabled = true;
+          var total = 0;
+          selectedSPPItems.forEach(function (idx) {
+            total += sppData.tagihan[idx].jumlah;
+          });
+          document.getElementById("sppPayTotal").textContent =
+            formatRupiah(total);
+        }
+      }
+
+      function lanjutBayarSPP() {
+        if (selectedSPPItems.length === 0) {
+          showToast("warning", "Perhatian", "Pilih minimal 1 bulan SPP");
+          return;
+        }
+        sppGoStep(2);
+      }
+
+      function renderSPPSummary() {
+        var detail = document.getElementById("sppSummaryDetail");
+        var total = 0;
+        var html = "";
+        selectedSPPItems.forEach(function (idx) {
+          var tag = sppData.tagihan[idx];
+          total += tag.jumlah;
+          html +=
+            '<div class="bill-result-row"><span class="bill-result-label">SPP ' +
+            tag.bulan +
+            " " +
+            tag.tahun +
+            '</span><span class="bill-result-value">' +
+            formatRupiah(tag.jumlah) +
+            "</span></div>";
+        });
+        html +=
+          '<div class="bill-result-row"><span class="bill-result-label">Nama Siswa</span><span class="bill-result-value">' +
+          sppData.nama +
+          "</span></div>";
+        html +=
+          '<div class="bill-result-row"><span class="bill-result-label">Kelas</span><span class="bill-result-value">' +
+          sppData.kelas +
+          "</span></div>";
+        html +=
+          '<div class="bill-result-row"><span class="bill-result-label">Admin</span><span class="bill-result-value">Gratis</span></div>';
+        detail.innerHTML = html;
+        document.getElementById("sppSummaryTotal").textContent =
+          formatRupiah(total);
+      }
+
+      /* ============================================
+         SPP - PAYMENT METHOD
+      ============================================ */
+      function selectPaymentMethod(el, method) {
+        selectedPaymentMethod = method;
+        document
+          .querySelectorAll("#sppPaymentMethods .payment-method")
+          .forEach(function (pm) {
+            pm.classList.remove("selected");
+            pm.setAttribute("aria-checked", "false");
+          });
+        el.classList.add("selected");
+        el.setAttribute("aria-checked", "true");
+        document.getElementById("btnBayarSPP").disabled = false;
+      }
+
+      /* ============================================
+         SPP - PROSES BAYAR
+      ============================================ */
+      function prosesBayarSPP() {
+        if (!selectedPaymentMethod) {
+          showToast("warning", "Perhatian", "Pilih metode pembayaran");
+          return;
+        }
+
+        var total = 0;
+        selectedSPPItems.forEach(function (idx) {
+          total += sppData.tagihan[idx].jumlah;
+        });
+
+        if (saldo < total) {
+          showToast(
+            "error",
+            "Saldo Tidak Cukup",
+            "Saldo Anda " +
+              formatRupiah(saldo) +
+              ". Anda butuh " +
+              formatRupiah(total),
+          );
+          return;
+        }
+
+        showLoading(
+          "Memproses Pembayaran",
+          "Menghubungkan ke " + selectedPaymentMethod.toUpperCase() + "...",
+        );
+
+        setTimeout(function () {
+          hideLoading();
+
+          // Potong saldo
+          saldo -= total;
+          updateSaldoDisplay();
+
+          // Update status tagihan
+          selectedSPPItems.forEach(function (idx) {
+            sppData.tagihan[idx].status = "lunas";
+          });
+
+          // Buat transaksi
+          var bulanList = selectedSPPItems
+            .map(function (idx) {
+              return sppData.tagihan[idx].bulan;
+            })
+            .join(", ");
+          var trxId = generateTrxId();
+          transactions.unshift({
+            id: trxId,
+            date: getTodayDate(),
+            type: "spp",
+            desc: "SPP " + bulanList + " - " + sppData.nama,
+            amount: total,
+            status: "sukses",
+          });
+
+          // Buat VA number
+          var vaPrefix = {
+            bca: "8800",
+            bni: "8001",
+            mandiri: "8900",
+            bri: "1080",
+          };
+          var vaBankName = {
+            bca: "Bank BCA",
+            bni: "Bank BNI",
+            mandiri: "Bank Mandiri",
+            bri: "Bank BRI",
+          };
+          var vaNum =
+            vaPrefix[selectedPaymentMethod] +
+            "12345678" +
+            Math.random().toString().slice(2, 6);
+
+          // Simpan receipt data
+          lastReceiptData = {
+            type: "spp",
+            trxId: trxId,
+            nama: sppData.nama,
+            kelas: sppData.kelas,
+            sekolah: sppData.sekolah,
+            bulanList: bulanList,
+            total: total,
+            bank: vaBankName[selectedPaymentMethod],
+            va: vaNum,
+            date: getTodayDate(),
+          };
+
+          // Tampilkan VA
+          document.getElementById("sppVABank").innerHTML =
+            '<i class="fas fa-building-columns"></i> <span>' +
+            vaBankName[selectedPaymentMethod] +
+            "</span>";
+          document.getElementById("sppVANumber").textContent = vaNum;
+
+          sppGoStep(4);
+          showToast(
+            "success",
+            "Pembayaran Berhasil",
+            "SPP telah dibayar. Saldo: " + formatRupiah(saldo),
+          );
+        }, 2000);
+      }
+
+      function resetSPP() {
+        sppData = null;
+        selectedSPPItems = [];
+        selectedPaymentMethod = null;
+        document.getElementById("sppNim").value = "";
+        document.getElementById("sppTableCard").classList.add("hidden");
+        sppGoStep(1);
+        navigateTo("home");
+      }
+
+      /* ============================================
+         PLN
+      ============================================ */
+      function cekPLN() {
+        var id = document.getElementById("plnId").value.trim();
+        if (!id) {
+          showToast("warning", "Perhatian", "Masukkan ID Pelanggan PLN");
+          return;
+        }
+        showLoading("Mencari Tagihan PLN", "ID: " + id);
+        setTimeout(function () {
+          hideLoading();
+          var data = plnDatabase[id];
+          if (!data) {
+            showToast(
+              "error",
+              "Tidak Ditemukan",
+              "ID Pelanggan tidak ditemukan. Coba: 543210987654",
+            );
+            document.getElementById("plnResult").classList.add("hidden");
+            return;
+          }
+          var total = data.tagihan + data.denda + data.admin;
+          var html =
+            '<div class="bill-result">' +
+            '<div class="bill-result-header"><div class="bill-result-status"><div class="bill-result-status-icon"><i class="fas fa-check"></i></div><div><div style="font-weight:700">Tagihan Ditemukan</div><div class="text-sm text-muted">Periode ' +
+            data.periode +
+            "</div></div></div></div>" +
+            '<div class="bill-result-detail">' +
+            '<div class="bill-result-row"><span class="bill-result-label">Nama Pelanggan</span><span class="bill-result-value">' +
+            data.nama +
+            "</span></div>" +
+            '<div class="bill-result-row"><span class="bill-result-label">Alamat</span><span class="bill-result-value">' +
+            data.alamat +
+            "</span></div>" +
+            '<div class="bill-result-row"><span class="bill-result-label">Tarif/Daya</span><span class="bill-result-value">' +
+            data.tarif +
+            "</span></div>" +
+            '<div class="bill-result-row"><span class="bill-result-label">Tagihan Listrik</span><span class="bill-result-value">' +
+            formatRupiah(data.tagihan) +
+            "</span></div>" +
+            (data.denda > 0
+              ? '<div class="bill-result-row"><span class="bill-result-label">Denda</span><span class="bill-result-value text-danger">' +
+                formatRupiah(data.denda) +
+                "</span></div>"
+              : "") +
+            '<div class="bill-result-row"><span class="bill-result-label">Biaya Admin</span><span class="bill-result-value">' +
+            formatRupiah(data.admin) +
+            "</span></div>" +
+            "</div>" +
+            '<div class="bill-result-total"><div class="bill-result-total-label">Total Bayar</div><div class="bill-result-total-value">' +
+            formatRupiah(total) +
+            "</div></div>" +
+            "</div>" +
+            '<button class="btn btn-primary btn-block mt-4" onclick="bayarPLN(\'' +
+            id +
+            '\')"><i class="fas fa-credit-card"></i> Bayar ' +
+            formatRupiah(total) +
+            "</button>";
+          document.getElementById("plnResult").innerHTML = html;
+          document.getElementById("plnResult").classList.remove("hidden");
+        }, 1200);
+      }
+
+      function bayarPLN(id) {
+        var data = plnDatabase[id];
+        var total = data.tagihan + data.denda + data.admin;
+        if (saldo < total) {
+          showToast(
+            "error",
+            "Saldo Tidak Cukup",
+            "Saldo Anda " + formatRupiah(saldo),
+          );
+          return;
+        }
+        showLoading("Membayar PLN", "Memproses pembayaran...");
+        setTimeout(function () {
+          hideLoading();
+          saldo -= total;
+          updateSaldoDisplay();
+          var trxId = generateTrxId();
+          transactions.unshift({
+            id: trxId,
+            date: getTodayDate(),
+            type: "pln",
+            desc: "PLN - " + data.nama,
+            amount: total,
+            status: "sukses",
+          });
+          lastReceiptData = {
+            type: "pln",
+            trxId: trxId,
+            nama: data.nama,
+            alamat: data.alamat,
+            tarif: data.tarif,
+            tagihan: data.tagihan,
+            denda: data.denda,
+            admin: data.admin,
+            total: total,
+            periode: data.periode,
+            date: getTodayDate(),
+          };
+          showToast(
+            "success",
+            "Berhasil",
+            "PLN " + data.nama + " telah dibayar",
+          );
+          document.getElementById("plnResult").classList.add("hidden");
+          document.getElementById("plnId").value = "";
+          showReceipt("pln");
+        }, 1500);
+      }
+
+      /* ============================================
+         PDAM
+      ============================================ */
+      function cekPDAM() {
+        var id = document.getElementById("pdamId").value.trim();
+        if (!id) {
+          showToast("warning", "Perhatian", "Masukkan No. Sambungan PDAM");
+          return;
+        }
+        showLoading("Mencari Tagihan PDAM", "No: " + id);
+        setTimeout(function () {
+          hideLoading();
+          var data = pdamDatabase[id];
+          if (!data) {
+            showToast(
+              "error",
+              "Tidak Ditemukan",
+              "No. Sambungan tidak ditemukan. Coba: 12345678",
+            );
+            document.getElementById("pdamResult").classList.add("hidden");
+            return;
+          }
+          var total = data.tagihan + data.denda + data.admin;
+          var html =
+            '<div class="bill-result">' +
+            '<div class="bill-result-header"><div class="bill-result-status"><div class="bill-result-status-icon"><i class="fas fa-check"></i></div><div><div style="font-weight:700">Tagihan Ditemukan</div><div class="text-sm text-muted">Periode ' +
+            data.periode +
+            "</div></div></div></div>" +
+            '<div class="bill-result-detail">' +
+            '<div class="bill-result-row"><span class="bill-result-label">Nama Pelanggan</span><span class="bill-result-value">' +
+            data.nama +
+            "</span></div>" +
+            '<div class="bill-result-row"><span class="bill-result-label">Alamat</span><span class="bill-result-value">' +
+            data.alamat +
+            "</span></div>" +
+            '<div class="bill-result-row"><span class="bill-result-label">Golongan</span><span class="bill-result-value">' +
+            data.golongan +
+            "</span></div>" +
+            '<div class="bill-result-row"><span class="bill-result-label">Tagihan Air</span><span class="bill-result-value">' +
+            formatRupiah(data.tagihan) +
+            "</span></div>" +
+            (data.denda > 0
+              ? '<div class="bill-result-row"><span class="bill-result-label">Denda</span><span class="bill-result-value text-danger">' +
+                formatRupiah(data.denda) +
+                "</span></div>"
+              : "") +
+            '<div class="bill-result-row"><span class="bill-result-label">Biaya Admin</span><span class="bill-result-value">' +
+            formatRupiah(data.admin) +
+            "</span></div>" +
+            "</div>" +
+            '<div class="bill-result-total"><div class="bill-result-total-label">Total Bayar</div><div class="bill-result-total-value">' +
+            formatRupiah(total) +
+            "</div></div>" +
+            "</div>" +
+            '<button class="btn btn-primary btn-block mt-4" onclick="bayarPDAM(\'' +
+            id +
+            '\')"><i class="fas fa-credit-card"></i> Bayar ' +
+            formatRupiah(total) +
+            "</button>";
+          document.getElementById("pdamResult").innerHTML = html;
+          document.getElementById("pdamResult").classList.remove("hidden");
+        }, 1200);
+      }
+
+      function bayarPDAM(id) {
+        var data = pdamDatabase[id];
+        var total = data.tagihan + data.denda + data.admin;
+        if (saldo < total) {
+          showToast(
+            "error",
+            "Saldo Tidak Cukup",
+            "Saldo Anda " + formatRupiah(saldo),
+          );
+          return;
+        }
+        showLoading("Membayar PDAM", "Memproses pembayaran...");
+        setTimeout(function () {
+          hideLoading();
+          saldo -= total;
+          updateSaldoDisplay();
+          var trxId = generateTrxId();
+          transactions.unshift({
+            id: trxId,
+            date: getTodayDate(),
+            type: "pdam",
+            desc: "PDAM - " + data.nama,
+            amount: total,
+            status: "sukses",
+          });
+          lastReceiptData = {
+            type: "pdam",
+            trxId: trxId,
+            nama: data.nama,
+            alamat: data.alamat,
+            golongan: data.golongan,
+            tagihan: data.tagihan,
+            denda: data.denda,
+            admin: data.admin,
+            total: total,
+            periode: data.periode,
+            date: getTodayDate(),
+          };
+          showToast(
+            "success",
+            "Berhasil",
+            "PDAM " + data.nama + " telah dibayar",
+          );
+          document.getElementById("pdamResult").classList.add("hidden");
+          document.getElementById("pdamId").value = "";
+          showReceipt("pdam");
+        }, 1500);
+      }
+
+      /* ============================================
+         PULSA
+      ============================================ */
+      function selectProvider(el, provider) {
+        selectedProvider = provider;
+        document
+          .querySelectorAll("#pulsaProviders .provider-card")
+          .forEach(function (pc) {
+            pc.classList.remove("selected");
+            pc.setAttribute("aria-checked", "false");
+          });
+        el.classList.add("selected");
+        el.setAttribute("aria-checked", "true");
+        selectedNominal = null;
+
+        // Tampilkan nominal
+        var container = document.getElementById("pulsaNominals");
+        container.innerHTML = "";
+        pulsaNominals.forEach(function (n, idx) {
+          var div = document.createElement("div");
+          div.className = "nominal-card";
+          div.setAttribute("tabindex", "0");
+          div.setAttribute("role", "radio");
+          div.setAttribute("aria-checked", "false");
+          div.innerHTML =
+            '<div class="nominal-card-amount">' +
+            n.label +
+            '</div><div class="nominal-card-price">Harga: ' +
+            formatRupiah(n.price) +
+            "</div>";
+          div.addEventListener("click", function () {
+            selectNominal(div, idx);
+          });
+          div.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectNominal(div, idx);
+            }
+          });
+          container.appendChild(div);
+        });
+        document.getElementById("pulsaNominalCard").classList.remove("hidden");
+        document.getElementById("btnBeliPulsa").disabled = true;
+      }
+
+      function selectNominal(el, idx) {
+        selectedNominal = idx;
+        document
+          .querySelectorAll("#pulsaNominals .nominal-card")
+          .forEach(function (nc) {
+            nc.classList.remove("selected");
+            nc.setAttribute("aria-checked", "false");
+          });
+        el.classList.add("selected");
+        el.setAttribute("aria-checked", "true");
+        document.getElementById("btnBeliPulsa").disabled = false;
+      }
+
+      function beliPulsa() {
+        var no = document.getElementById("pulsaNo").value.trim();
+        if (!no) {
+          showToast("warning", "Perhatian", "Masukkan nomor HP");
+          return;
+        }
+        if (selectedNominal === null) {
+          showToast("warning", "Perhatian", "Pilih nominal pulsa");
+          return;
+        }
+        var nom = pulsaNominals[selectedNominal];
+        if (saldo < nom.price) {
+          showToast(
+            "error",
+            "Saldo Tidak Cukup",
+            "Saldo Anda " + formatRupiah(saldo),
+          );
+          return;
+        }
+
+        var providerNames = {
+          telkomsel: "Telkomsel",
+          xl: "XL Axiata",
+          indosat: "Indosat",
+          tri: "Tri",
+          smartfren: "Smartfren",
+          axis: "Axis",
+        };
+        showLoading(
+          "Membeli Pulsa",
+          providerNames[selectedProvider] + " " + nom.label,
+        );
+        setTimeout(function () {
+          hideLoading();
+          saldo -= nom.price;
+          updateSaldoDisplay();
+          var trxId = generateTrxId();
+          transactions.unshift({
+            id: trxId,
+            date: getTodayDate(),
+            type: "pulsa",
+            desc:
+              "Pulsa " +
+              providerNames[selectedProvider] +
+              " " +
+              nom.label +
+              " (" +
+              no.slice(-4) +
+              ")",
+            amount: nom.price,
+            status: "sukses",
+          });
+          lastReceiptData = {
+            type: "pulsa",
+            trxId: trxId,
+            provider: providerNames[selectedProvider],
+            nominal: nom.label,
+            price: nom.price,
+            no: no,
+            date: getTodayDate(),
+          };
+          showToast(
+            "success",
+            "Berhasil",
+            "Pulsa " + nom.label + " berhasil dikirim ke " + no,
+          );
+          showReceipt("pulsa");
+        }, 1500);
+      }
+
+      /* ============================================
+         STRUK / RECEIPT
+      ============================================ */
+      function showReceipt(type) {
+        var d = lastReceiptData;
+        if (!d) return;
+        var html = '<div class="receipt">';
+        html += '<div class="receipt-header">';
+        html += '<div class="receipt-logo">BayarKita</div>';
+        html += '<div class="receipt-title">Struk Pembayaran</div>';
+        html +=
+          '<div class="receipt-id">' + d.trxId + " | " + d.date + "</div>";
+        html += '</div><div class="receipt-body">';
+
+        if (type === "spp") {
+          html += rRow("Jenis", "Pembayaran SPP");
+          html += rRow("Nama", d.nama);
+          html += rRow("Kelas", d.kelas);
+          html += rRow("Sekolah", d.sekolah);
+          html += rRow("Bulan", d.bulanList);
+          html += rRow("Metode", d.bank + " (VA)");
+          html += rRow("No. VA", d.va);
+        } else if (type === "pln") {
+          html += rRow("Jenis", "Tagihan PLN");
+          html += rRow("Nama", d.nama);
+          html += rRow("Alamat", d.alamat);
+          html += rRow("Tarif/Daya", d.tarif);
+          html += rRow("Periode", d.periode);
+          html += rRow("Tagihan", formatRupiah(d.tagihan));
+          if (d.denda > 0) html += rRow("Denda", formatRupiah(d.denda));
+          html += rRow("Admin", formatRupiah(d.admin));
+        } else if (type === "pdam") {
+          html += rRow("Jenis", "Tagihan PDAM");
+          html += rRow("Nama", d.nama);
+          html += rRow("Alamat", d.alamat);
+          html += rRow("Golongan", d.golongan);
+          html += rRow("Periode", d.periode);
+          html += rRow("Tagihan", formatRupiah(d.tagihan));
+          if (d.denda > 0) html += rRow("Denda", formatRupiah(d.denda));
+          html += rRow("Admin", formatRupiah(d.admin));
+        } else if (type === "pulsa") {
+          html += rRow("Jenis", "Pembelian Pulsa");
+          html += rRow("Provider", d.provider);
+          html += rRow("Nomor", d.no);
+          html += rRow("Nominal", d.nominal);
+        }
+
+        html +=
+          '<div class="receipt-row total"><span>TOTAL</span><span>' +
+          formatRupiah(d.total) +
+          "</span></div>";
+        html += "</div>";
+        html +=
+          '<div class="receipt-footer">Terima kasih telah menggunakan BayarKita<br>Simpan struk ini sebagai bukti pembayaran</div>';
+        html += "</div>";
+
+        openModal("Struk Pembayaran", html);
+      }
+
+      function rRow(label, value) {
+        return (
+          '<div class="receipt-row"><span class="label">' +
+          label +
+          "</span><span>" +
+          value +
+          "</span></div>"
+        );
+      }
+
+      /* ============================================
+         RIWAYAT
+      ============================================ */
+      function renderRiwayat(filter) {
+        filter = filter || "semua";
+        var filtered =
+          filter === "semua"
+            ? transactions
+            : transactions.filter(function (t) {
+                return t.type === filter;
+              });
+
+        // Stats
+        var totalSukses = filtered
+          .filter(function (t) {
+            return t.status === "sukses";
+          })
+          .reduce(function (s, t) {
+            return s + t.amount;
+          }, 0);
+        var countSukses = filtered.filter(function (t) {
+          return t.status === "sukses";
+        }).length;
+        document.getElementById("riwayatStats").innerHTML =
+          '<div class="stat-card"><div class="stat-card-icon blue"><i class="fas fa-receipt"></i></div><div class="stat-card-value">' +
+          filtered.length +
+          '</div><div class="stat-card-label">Total Transaksi</div></div>' +
+          '<div class="stat-card"><div class="stat-card-icon green"><i class="fas fa-check-circle"></i></div><div class="stat-card-value">' +
+          countSukses +
+          '</div><div class="stat-card-label">Berhasil</div></div>' +
+          '<div class="stat-card"><div class="stat-card-icon orange"><i class="fas fa-coins"></i></div><div class="stat-card-value">' +
+          formatRupiah(totalSukses) +
+          '</div><div class="stat-card-label">Total Nominal</div></div>' +
+          '<div class="stat-card"><div class="stat-card-icon red"><i class="fas fa-wallet"></i></div><div class="stat-card-value">' +
+          formatRupiah(saldo) +
+          '</div><div class="stat-card-label">Saldo Saat Ini</div></div>';
+
+        // Table
+        var tbody = document.getElementById("riwayatTableBody");
+        var emptyEl = document.getElementById("riwayatEmpty");
+        if (filtered.length === 0) {
+          tbody.innerHTML = "";
+          emptyEl.classList.remove("hidden");
+          return;
+        }
+        emptyEl.classList.add("hidden");
+        var typeIcons = {
+          spp: "fa-graduation-cap",
+          pln: "fa-bolt",
+          pdam: "fa-droplet",
+          pulsa: "fa-mobile-screen",
+        };
+        var typeColors = {
+          spp: "background:rgba(13,148,136,0.1);color:var(--primary)",
+          pln: "background:rgba(245,158,11,0.1);color:var(--warning)",
+          pdam: "background:rgba(59,130,246,0.1);color:var(--info)",
+          pulsa: "background:rgba(139,92,246,0.1);color:#8b5cf6",
+        };
+        var html = "";
+        filtered.forEach(function (t) {
+          html +=
+            "<tr>" +
+            '<td class="text-sm">' +
+            t.date +
+            "</td>" +
+            '<td><span class="badge badge-info" style="text-transform:uppercase">' +
+            t.type +
+            "</span></td>" +
+            "<td>" +
+            t.desc +
+            "</td>" +
+            '<td class="font-semibold">' +
+            formatRupiah(t.amount) +
+            "</td>" +
+            '<td><span class="badge badge-success">' +
+            t.status +
+            "</span></td>" +
+            "</tr>";
+        });
+        tbody.innerHTML = html;
+      }
+
+      function filterRiwayat(filter, btn) {
+        document
+          .querySelectorAll("#riwayatFilter .filter-btn")
+          .forEach(function (b) {
+            b.classList.remove("active");
+          });
+        btn.classList.add("active");
+        renderRiwayat(filter);
+      }
+
+      /* ============================================
+         RECENT TRANSACTIONS (HOME)
+      ============================================ */
+      function renderRecentTransactions() {
+        var container = document.getElementById("recentTransactions");
+        var typeIcons = {
+          spp: "fa-graduation-cap",
+          pln: "fa-bolt",
+          pdam: "fa-droplet",
+          pulsa: "fa-mobile-screen",
+        };
+        var typeColors = {
+          spp: "rgba(13,148,136,0.1),var(--primary)",
+          pln: "rgba(245,158,11,0.1),var(--warning)",
+          pdam: "rgba(59,130,246,0.1),var(--info)",
+          pulsa: "rgba(139,92,246,0.1),#8b5cf6",
+        };
+        if (transactions.length === 0) {
+          container.innerHTML =
+            '<div class="empty-state"><div class="empty-state-icon"><i class="fas fa-inbox"></i></div><div class="empty-state-title">Belum Ada Transaksi</div><div class="empty-state-desc">Mulai bayar tagihan Anda</div></div>';
+          return;
+        }
+        var html = "";
+        var recent = transactions.slice(0, 5);
+        recent.forEach(function (t) {
+          var colors = typeColors[t.type] || "rgba(107,114,128,0.1),#6b7280";
+          var parts = colors.split(",");
+          html +=
+            '<div class="recent-item">' +
+            '<div class="recent-item-icon" style="background:' +
+            parts[0] +
+            ";color:" +
+            parts[1] +
+            '"><i class="fas ' +
+            (typeIcons[t.type] || "fa-receipt") +
+            '"></i></div>' +
+            '<div class="recent-item-info"><div class="recent-item-title">' +
+            t.desc +
+            '</div><div class="recent-item-date">' +
+            t.date +
+            "</div></div>" +
+            '<div class="recent-item-amount text-danger">-' +
+            formatRupiah(t.amount) +
+            "</div>" +
+            "</div>";
+        });
+        container.innerHTML = html;
+      }
+
+      /* ============================================
+         KEYBOARD SUPPORT
+      ============================================ */
+      document.addEventListener("keydown", function (e) {
+        // Enter pada quick-access-item
+        if (
+          e.key === "Enter" &&
+          e.target.classList.contains("quick-access-item")
+        ) {
+          e.target.click();
+        }
+        // Enter pada provider-card
+        if (e.key === "Enter" && e.target.classList.contains("provider-card")) {
+          e.target.click();
+        }
+        // Enter pada payment-method
+        if (
+          e.key === "Enter" &&
+          e.target.classList.contains("payment-method")
+        ) {
+          e.target.click();
+        }
+        // Escape tutup modal
+        if (e.key === "Escape") {
+          closeModal();
+        }
+      });
+
+      // Enter pada input NIM untuk cari
+      document.addEventListener("DOMContentLoaded", function () {
+        var nimInput = document.getElementById("sppNim");
+        if (nimInput) {
+          nimInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") cariSPP();
+          });
+        }
+      });
+
+      /* ============================================
+         INIT
+      ============================================ */
+      (function init() {
+        updateSaldoDisplay();
+        renderRecentTransactions();
+      })();
+    </script>
+  </body>
+</html>

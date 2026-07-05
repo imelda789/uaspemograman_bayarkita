@@ -1,0 +1,207 @@
+/* ============================================
+   BAYARKITA - PRINT CSS
+   Khusus untuk cetak struk/bukti pembayaran
+   ============================================ */
+
+@media print {
+  @page {
+    size: 80mm 297mm;
+    margin: 0;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  /* Sembunyikan elemen yang tidak perlu dicetak */
+  .navbar,
+  .mobile-menu-toggle,
+  .theme-toggle,
+  .nav-link,
+  .btn:not(.print-only),
+  .filter-bar,
+  .toast-container,
+  .loading-overlay,
+  .modal-overlay:not(.print-modal),
+  .quick-access-grid,
+  .promo-banner,
+  .saldo-actions,
+  .progress-steps,
+  .payment-methods,
+  .form-group,
+  .provider-grid,
+  .nominal-grid,
+  .spp-checkbox,
+  .spp-total-bar,
+  .modal-footer,
+  .stat-grid,
+  .topup-amount-grid {
+    display: none !important;
+  }
+
+  /* Tampilkan hanya section yang aktif */
+  .section {
+    display: none !important;
+    padding: 0 !important;
+    min-height: auto !important;
+  }
+
+  .section.active {
+    display: block !important;
+  }
+
+  /* Receipt/Struk styling */
+  .receipt,
+  .modal-receipt .modal-body,
+  .bill-result {
+    display: block !important;
+    background: white !important;
+    color: black !important;
+    border: 2px solid black !important;
+    box-shadow: none !important;
+    padding: 20px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .receipt-header,
+  .receipt-footer {
+    text-align: center !important;
+    border-color: black !important;
+  }
+
+  .receipt-logo {
+    color: black !important;
+  }
+
+  .receipt-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 4px 0 !important;
+    border-bottom: 1px dotted #ccc !important;
+  }
+
+  .receipt-row.total {
+    border-top: 2px solid black !important;
+    border-bottom: 2px solid black !important;
+    font-weight: bold !important;
+    font-size: 14pt !important;
+    padding: 8px 0 !important;
+  }
+
+  .receipt-qr {
+    border: 1px solid black !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Modal receipt */
+  .modal-receipt {
+    position: static !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: white !important;
+    transform: none !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .modal-receipt .modal-header,
+  .modal-receipt .modal-footer {
+    display: none !important;
+  }
+
+  /* VA Display */
+  .va-display,
+  .teller-display {
+    border: 2px solid black !important;
+    background: white !important;
+  }
+
+  .va-number,
+  .teller-code {
+    color: black !important;
+    font-size: 18pt !important;
+  }
+
+  /* QRIS */
+  .qris-display {
+    text-align: center !important;
+  }
+
+  .qris-timer {
+    display: none !important;
+  }
+
+  /* Card styling untuk print */
+  .card {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Table styling */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc !important;
+    padding: 8px !important;
+  }
+
+  th {
+    background: #f0f0f0 !important;
+  }
+
+  /* Utility untuk print */
+  .print-only {
+    display: block !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Pastikan background dan warna tetap terlihat */
+  * {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}
+
+/* ============================================
+   PRINT BUTTON (hanya tampil di screen)
+   ============================================ */
+@media screen {
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: all var(--transition-fast);
+  }
+
+  .print-btn:hover {
+    background: var(--primary-dark);
+  }
+
+  .print-btn i {
+    font-size: 1rem;
+  }
+}

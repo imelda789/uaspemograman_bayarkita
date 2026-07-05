@@ -1,0 +1,240 @@
+/* ============================================
+   BAYARKITA - RESPONSIVE CSS
+   Mobile-First Design
+   ============================================ */
+
+/* ============================================
+   MOBILE (Default) - < 640px
+   ============================================ */
+.navbar-nav {
+  display: none;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: var(--bg-primary);
+  flex-direction: column;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  gap: var(--space-2);
+}
+
+.navbar-nav.active {
+  display: flex;
+}
+
+.mobile-menu-toggle {
+  display: block;
+}
+
+.nav-link {
+  width: 100%;
+  justify-content: flex-start;
+  padding: var(--space-3) var(--space-4);
+}
+
+.saldo-amount {
+  font-size: 1.75rem;
+}
+
+.grid-cols-2,
+.grid-cols-3,
+.grid-cols-4 {
+  grid-template-columns: 1fr;
+}
+
+.quick-access-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.provider-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.nominal-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.stat-grid {
+  grid-template-columns: 1fr;
+}
+
+.toast-container {
+  left: var(--space-4);
+  right: var(--space-4);
+  max-width: none;
+}
+
+.modal {
+  margin: var(--space-4);
+  max-height: calc(100vh - var(--space-8));
+}
+
+.table-container {
+  font-size: 0.8rem;
+}
+
+.table-container th,
+.table-container td {
+  padding: var(--space-2) var(--space-3);
+}
+
+.filter-bar {
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  padding-bottom: var(--space-2);
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.topup-amount-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ============================================
+   TABLET - 640px - 1023px
+   ============================================ */
+@media (min-width: 640px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-access-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .provider-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .nominal-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .saldo-amount {
+    font-size: 2rem;
+  }
+
+  .topup-amount-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ============================================
+   DESKTOP - >= 1024px
+   ============================================ */
+@media (min-width: 1024px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+
+  .navbar-nav {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .nav-link {
+    width: auto;
+    justify-content: center;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .quick-access-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .provider-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .nominal-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .saldo-amount {
+    font-size: 2.5rem;
+  }
+
+  .section {
+    padding: var(--space-10) 0;
+  }
+
+  .container {
+    padding: 0 var(--space-8);
+  }
+
+  .table-container {
+    font-size: 0.875rem;
+  }
+}
+
+/* ============================================
+   LARGE DESKTOP - >= 1280px
+   ============================================ */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION (Accessibility)
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE (Accessibility)
+   ============================================ */
+@media (prefers-contrast: high) {
+  :root {
+    --primary: #006666;
+    --primary-dark: #004d4d;
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border-color: #000000;
+  }
+
+  .card,
+  .quick-access-item,
+  .provider-card,
+  .nominal-card {
+    border-width: 3px;
+  }
+
+  .btn {
+    border: 2px solid currentColor;
+  }
+}
